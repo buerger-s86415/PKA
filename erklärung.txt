@@ -1,5 +1,8 @@
 #Kevin BÜrger
 
+Mermaid Chart:
+https://www.mermaidchart.com/app/projects/bb353608-c047-464b-9d51-2d40f317cc1c/diagrams/cd9c7c7e-f5b9-438e-8294-6ff0333b3f35/version/v0.1/edit
+
 Klasse	    Zweck
 
 Vehicle	    Interface: einheitliche Struktur für Fahrzeuge (z. B. UGV)

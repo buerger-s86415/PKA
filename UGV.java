@@ -1,34 +1,46 @@
-import java.util.ArrayList;
-import java.util.List;
 
 public class UGV implements Vehicle {
     private final String id;
     private Position currentPosition;
     private double batteryLevel;
-    private List<Task> tasks = new ArrayList<>();
+    private String state;
 
-    public UGV(String id, Position position, double batteryLevel) {
+    public UGV(String id, Position position, double batteryLevel, String state) {
         this.id = id;
         this.currentPosition = position;
         this.batteryLevel = batteryLevel;
+        this.state = state;
     }
 
-    @Override
     public String getId() {
         return id;
     }
 
-    @Override
     public Position getCurrentPosition() {
         return currentPosition;
     }
 
     @Override
     public void assignTask(Task task) {
-        tasks.add(task);
+
+    }
+    public void setCurrentPosition(Position currentPosition) {
+        this.currentPosition = currentPosition;
     }
 
     public double getBatteryLevel() {
         return batteryLevel;
+    }
+
+    public void setBatteryLevel(double batteryLevel) {
+        this.batteryLevel = batteryLevel;
+    }
+
+    public String getState() {
+        return state;
+    }
+
+    public void setState(String state) {
+        this.state = state;
     }
 }
