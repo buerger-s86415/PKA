@@ -1,0 +1,138 @@
+#Kevin BÜrger
+
+Klasse	    Zweck
+
+Vehicle	    Interface: einheitliche Struktur für Fahrzeuge (z. B. UGV)
+UGV	        Konkretes   Fahrzeug (mit Batterie, Position, Aufgabenliste)
+Position	Value Object: Darstellung geografischer Koordinaten
+Task	    Eine Aufgabe, die ein Fahrzeug erledigen soll (besteht aus Routen)
+Route	    Eine geplante Strecke (besteht aus mehreren Positionen)
+
+
+-------------------------------------------------------------------------------------------
+
+🔌 Vehicle – das Interface
+
+public interface Vehicle {
+    String getId();
+    Position getCurrentPosition();
+    void assignTask(Task task);
+}
+
+Warum wichtig?
+→ Damit du später auch andere Fahrzeugtypen (z. B. Drohnen) einbauen kannst.
+→ Mit dem Interface kannst du polymorph arbeiten, z. B.:
+
+List<Vehicle> allVehicles = ... // Kann UGVs oder andere enthalten
+
+Nutzen: klare Trennung von was ein Fahrzeug tun soll vs. wie es es tut.
+
+------------------------------------------------------------------------------------------
+
+📌 Position – das Value Object
+
+public class Position {
+    private final double latitude;
+    private final double longitude;
+    ...
+}
+
+Warum wichtig?
+→ Jede Route und jedes Fahrzeug hat eine Position. Du brauchst diese Klasse, um z. B. zu berechnen, wie weit Fahrzeuge voneinander entfernt sind.
+
+Warum final?
+→ Es ist unveränderlich, also ein echtes Value Object (wie im Video erwähnt). Das vermeidet Seiteneffekte.
+
+-------------------------------------------------------------------------------------------
+
+🚗 UGV – das konkrete Fahrzeug
+
+public class UGV implements Vehicle {
+    private final String id;
+    private Position currentPosition;
+    private double batteryLevel;
+    private List<Task> tasks = new ArrayList<>();
+    ...
+}
+
+Was ist drin?
+
+    id: eindeutige Kennung
+
+    currentPosition: wo es gerade ist
+
+    batteryLevel: wie viel Saft noch drin ist ⚡
+
+    tasks: Liste aller zugewiesenen Aufgaben
+
+Warum wichtig?
+→ Das ist die zentrale Klasse, die alles "lebt": bekommt Aufgaben, fährt Strecken usw.
+
+-------------------------------------------------------------------------------------------
+
+📋 Task – eine zugewiesene Aufgabe
+
+public class Task {
+    private final String taskId;
+    private final List<Route> routes;
+}
+
+Was ist drin?
+
+    taskId: eindeutige Kennung
+
+    routes: eine Aufgabe besteht aus mehreren Routen, z. B.:
+
+        Lager A → Übergabepunkt
+
+        Übergabepunkt → Lager B
+
+Warum wichtig?
+→ Macht die Aufgaben flexibel: ein Fahrzeug kann mehrere Strecken in einem Auftrag fahren.
+
+-------------------------------------------------------------------------------------------
+
+🗺️ Route – eine Strecke
+
+public class Route {
+    private final String routeId;
+    private final List<Position> waypoints;
+}
+
+Was ist drin?
+
+    routeId: Name/ID der Route
+
+    waypoints: einzelne GPS-Punkte, die das Fahrzeug abfahren soll
+
+Warum wichtig?
+→ Ermöglicht dir später sogar eine Art Navigation oder Visualisierung auf einer Karte.
+→ Damit kannst du z. B. auch Routen vergleichen oder neu planen lassen.
+
+-------------------------------------------------------------------------------------------
+
+🔮 Was später noch kommen kann (aber noch nicht muss)
+
+Zusatzklasse	Zweck
+
+FleetManager	Zentrale Verwaltung der Flotte
+DiagnosticTool	Batteriezustand, Fehler usw.
+RoutePlanner	Planung & Umplanung von Routen
+User / Admin	Authentifizierung (Sicherheit)
+REST-API	    Kommunikation mit UGVs
+
+-------------------------------------------------------------------------------------------
+
+🎯 Fazit
+
+Mit den 5 Klassen, die du jetzt hast, kannst du:
+
+    Fahrzeuge erstellen und verwalten
+
+    Aufgaben und Routen definieren
+
+    Schnittstellen und Vererbung nutzen
+
+    Prinzipien wie Value Object & Entkopplung verstehen
+
+-------------------------------------------------------------------------------------------
