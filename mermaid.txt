@@ -1,1 +1,61 @@
-https://github.com/buerger-s86415/PKA.git
+classDiagram
+class UGV {
+    ID
+    Position
+    BatteryState
+    HealthState
+    currentTask
+}
+class Route {
+    ID
+    Waypoints
+    length
+
+    get_points()
+}
+class Punkt {
+    ID
+    Longitude
+    Latitude
+    Timestamp
+
+    set_timestamp()
+}
+class Zuweisung {
+    ID
+    Route
+    Description
+    State
+    Priority
+    CreatedAt
+    AssignedUGV
+
+    get_route()
+    get_assigned_ugv()
+    set_priority()
+    get_state()
+}
+class Manager {
+    ZuweisungsObjekte_List
+    build_assignment()
+}
+class UGVFleet {
+    UGVList
+
+    get_UGV_by_ID()
+}
+
+class Routen {
+    RouteList
+
+    get_Route_by_ID()
+}
+
+Manager "1"<|--"*" Routen
+Manager "1"<|--"*" UGVFleet
+
+UGVFleet "1"<|--"*" UGV
+Routen "1"<|--"*" Route
+Route "*"<|--"*" Punkt
+
+Zuweisung <|-- Manager
